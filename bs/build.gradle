@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
@@ -19,6 +21,11 @@ android {
     }
 }
 
+greendao {//greendao配置
+    targetGenDir 'src/main/java/'
+    schemaVersion 1;
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -35,4 +42,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     //OkHttpUtils
     compile 'com.zhy:okhttputils:2.6.2'
+    //GreenDao
+    compile 'org.greenrobot:greendao:3.0.1'
 }
