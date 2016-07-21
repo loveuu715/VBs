@@ -5,8 +5,18 @@ import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.https.HttpsUtils;
+import com.zhy.http.okhttp.log.LoggerInterceptor;
+
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import vbs.vvi.com.bs.net.NetIntercept;
+import vbs.vvi.com.bs.utils.LogUtil;
+import vbs.vvi.com.bs.utils.ToastUtil;
 
 /**
  * Created by Wayne on 2016/7/19.
@@ -27,12 +37,41 @@ public class BaseApplication extends Application {
     }
 
     private void init() {
+        initConstants();
+//        initOkHttpConfig();
+        initLogConfig();
+        initToast();
+    }
+
+    private void initToast() {
+        ToastUtil.isShow = true;
+    }
+
+    private void initLogConfig() {
+        LogUtil.isDebug = true;
+    }
+
+    private void initConstants() {
         BaseApplication.sInstance = this;
         BaseApplication.sMainHandler = new Handler();
         BaseApplication.sMainLooper = getMainLooper();
         BaseApplication.sMainThread = Thread.currentThread();
         BaseApplication.sMainThreadId = android.os.Process.myTid();
         BaseApplication.sActivities = new LinkedList<Activity>();
+
+    }
+
+    private void initOkHttpConfig() {
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new LoggerInterceptor("HATE"))
+                .addInterceptor(new NetIntercept())
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                //其他配置
+                .build();
+        OkHttpUtils.initClient(okHttpClient);
     }
 
     public static Handler getsMainHandler() {

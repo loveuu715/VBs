@@ -33,4 +33,6 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     //EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
+    //OkHttpUtils
+    compile 'com.zhy:okhttputils:2.6.2'
 }
