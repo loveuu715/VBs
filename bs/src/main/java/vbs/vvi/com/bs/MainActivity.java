@@ -29,6 +29,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void initView() {
+        mToolbar.setTitle(R.string.main_title);
         setSupportActionBar(mToolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

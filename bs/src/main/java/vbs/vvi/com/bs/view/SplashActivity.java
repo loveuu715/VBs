@@ -24,6 +24,7 @@ public class SplashActivity extends BaseActivity {
     public void initView() {
         mToolbar.setTitle("设置");
         setSupportActionBar(mToolbar);
+        mToolbar.setNavigationIcon(R.mipmap.ic_back);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,5 +40,6 @@ public class SplashActivity extends BaseActivity {
 
     @OnClick({R.id.btn_getDatas})
     public void onClick(View view) {
+
     }
 }

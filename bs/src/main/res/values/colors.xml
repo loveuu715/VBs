@@ -2,6 +2,6 @@
 <resources>
     <color name="colorPrimary">#E48B7B</color>
     <color name="colorPrimaryDark">#E48B7B</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#E48B7B</color>
     <color name="color_trans_status_bar">#2000</color>
 </resources>
