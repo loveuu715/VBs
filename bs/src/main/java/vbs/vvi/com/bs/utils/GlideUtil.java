@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -19,6 +20,14 @@ public class GlideUtil {
 
     public static void displayWithBlur(Context context, ImageView iv, String path, int blur) {
         Glide.with(context).load(path).bitmapTransform(new BlurTransformation(context, blur)).into(iv);
+    }
+
+    public static void displayWithBlur(Context context, ImageView iv, int resId){
+        Glide.with(context).load(resId)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .bitmapTransform(new BlurTransformation(context, 35))
+                .crossFade(500)
+                .into(iv);
     }
 
 }

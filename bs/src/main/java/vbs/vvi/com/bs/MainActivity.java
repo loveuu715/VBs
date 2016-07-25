@@ -1,6 +1,5 @@
 package vbs.vvi.com.bs;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,17 +9,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import vbs.vvi.com.bs.base.BaseActivity;
-import vbs.vvi.com.bs.view.SplashActivity;
+import vbs.vvi.com.bs.utils.GlideUtil;
+import vbs.vvi.com.bs.utils.ToastUtil;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.iv_main_blur_bg)
+    ImageView mBlurBg;
 
     @Override
     public int getLayoutId() {
@@ -46,17 +49,24 @@ public class MainActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        GlideUtil.displayWithBlur(this, mBlurBg, R.mipmap.default_blur_bg);
+
+       /* NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);*/
     }
 
     @Override
     public void initData() {
     }
 
-    @OnClick({R.id.btn_click})
+    @OnClick({R.id.btn_click, R.id.civ_user_avatar})
     public void onClick(View view) {
-        this.startActivity(new Intent(this, SplashActivity.class));
+        switch (view.getId()){
+            case R.id.civ_user_avatar:
+                ToastUtil.show(mContext, "点击了头像",0);
+                break;
+        }
+//        this.startActivity(new Intent(this, SplashActivity.class));
     }
 
     @Override
@@ -68,6 +78,7 @@ public class MainActivity extends BaseActivity
             super.onBackPressed();
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
