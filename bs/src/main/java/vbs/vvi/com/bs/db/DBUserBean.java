@@ -1,7 +1,6 @@
 package vbs.vvi.com.bs.db;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
@@ -9,10 +8,9 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class DBUserBean {
-    @Id(autoincrement = true)//主键自增长
-    private long userId;
-    private long userKey;
+    private String userKey;
     private int status;
+    private String name;
     private String phone;
     private long birthday;
     private int tipSetting;
@@ -26,14 +24,14 @@ public class DBUserBean {
     private int groupInfo;
     private String groupName;
 
-    @Generated(hash = 1887974796)
-    public DBUserBean(long userId, long userKey, int status, String phone,
-            long birthday, int tipSetting, int gender, int important,
-            String remark, long createTime, String address, String avatarPath,
-            int relationship, int groupInfo, String groupName) {
-        this.userId = userId;
+    @Generated(hash = 973221816)
+    public DBUserBean(String userKey, int status, String name, String phone, long birthday,
+            int tipSetting, int gender, int important, String remark, long createTime,
+            String address, String avatarPath, int relationship, int groupInfo,
+            String groupName) {
         this.userKey = userKey;
         this.status = status;
+        this.name = name;
         this.phone = phone;
         this.birthday = birthday;
         this.tipSetting = tipSetting;
@@ -52,19 +50,11 @@ public class DBUserBean {
     public DBUserBean() {
     }
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public long getUserKey() {
+    public String getUserKey() {
         return userKey;
     }
 
-    public void setUserKey(long userKey) {
+    public void setUserKey(String userKey) {
         this.userKey = userKey;
     }
 
@@ -74,6 +64,14 @@ public class DBUserBean {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {

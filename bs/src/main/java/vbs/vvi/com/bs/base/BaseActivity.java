@@ -12,8 +12,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import vbs.vvi.com.bs.BaseApplication;
-import vbs.vvi.com.bs.events.EventObject;
+import vbs.vvi.com.bs.common.events.EventObject;
 
 /**
  * Created by Wayne on 2016/7/19.
@@ -21,13 +22,14 @@ import vbs.vvi.com.bs.events.EventObject;
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
+    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getLayoutId());
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         BaseApplication.activityEnqueue(this);
         initBundle();
@@ -35,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    private void initBundle() {}
+    public void initBundle() {}
 
     public abstract int getLayoutId();
 
@@ -66,6 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mUnbinder.unbind();
         EventBus.getDefault().unregister(this);
     }
 }

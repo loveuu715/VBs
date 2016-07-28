@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "DBUSER_BEAN".
 */
-public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
+public class DBUserBeanDao extends AbstractDao<DBUserBean, Void> {
 
     public static final String TABLENAME = "DBUSER_BEAN";
 
@@ -22,9 +22,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property UserId = new Property(0, long.class, "userId", true, "_id");
-        public final static Property UserKey = new Property(1, long.class, "userKey", false, "USER_KEY");
-        public final static Property Status = new Property(2, int.class, "status", false, "STATUS");
+        public final static Property UserKey = new Property(0, String.class, "userKey", false, "USER_KEY");
+        public final static Property Status = new Property(1, int.class, "status", false, "STATUS");
+        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Phone = new Property(3, String.class, "phone", false, "PHONE");
         public final static Property Birthday = new Property(4, long.class, "birthday", false, "BIRTHDAY");
         public final static Property TipSetting = new Property(5, int.class, "tipSetting", false, "TIP_SETTING");
@@ -52,9 +52,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DBUSER_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: userId
-                "\"USER_KEY\" INTEGER NOT NULL ," + // 1: userKey
-                "\"STATUS\" INTEGER NOT NULL ," + // 2: status
+                "\"USER_KEY\" TEXT," + // 0: userKey
+                "\"STATUS\" INTEGER NOT NULL ," + // 1: status
+                "\"NAME\" TEXT," + // 2: name
                 "\"PHONE\" TEXT," + // 3: phone
                 "\"BIRTHDAY\" INTEGER NOT NULL ," + // 4: birthday
                 "\"TIP_SETTING\" INTEGER NOT NULL ," + // 5: tipSetting
@@ -78,9 +78,17 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, DBUserBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getUserId());
-        stmt.bindLong(2, entity.getUserKey());
-        stmt.bindLong(3, entity.getStatus());
+ 
+        String userKey = entity.getUserKey();
+        if (userKey != null) {
+            stmt.bindString(1, userKey);
+        }
+        stmt.bindLong(2, entity.getStatus());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(3, name);
+        }
  
         String phone = entity.getPhone();
         if (phone != null) {
@@ -118,9 +126,17 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, DBUserBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getUserId());
-        stmt.bindLong(2, entity.getUserKey());
-        stmt.bindLong(3, entity.getStatus());
+ 
+        String userKey = entity.getUserKey();
+        if (userKey != null) {
+            stmt.bindString(1, userKey);
+        }
+        stmt.bindLong(2, entity.getStatus());
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(3, name);
+        }
  
         String phone = entity.getPhone();
         if (phone != null) {
@@ -156,16 +172,16 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     @Override
     public DBUserBean readEntity(Cursor cursor, int offset) {
         DBUserBean entity = new DBUserBean( //
-            cursor.getLong(offset + 0), // userId
-            cursor.getLong(offset + 1), // userKey
-            cursor.getInt(offset + 2), // status
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // userKey
+            cursor.getInt(offset + 1), // status
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // phone
             cursor.getLong(offset + 4), // birthday
             cursor.getInt(offset + 5), // tipSetting
@@ -184,9 +200,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
      
     @Override
     public void readEntity(Cursor cursor, DBUserBean entity, int offset) {
-        entity.setUserId(cursor.getLong(offset + 0));
-        entity.setUserKey(cursor.getLong(offset + 1));
-        entity.setStatus(cursor.getInt(offset + 2));
+        entity.setUserKey(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setStatus(cursor.getInt(offset + 1));
+        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPhone(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setBirthday(cursor.getLong(offset + 4));
         entity.setTipSetting(cursor.getInt(offset + 5));
@@ -202,18 +218,14 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(DBUserBean entity, long rowId) {
-        entity.setUserId(rowId);
-        return rowId;
+    protected final Void updateKeyAfterInsert(DBUserBean entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     @Override
-    public Long getKey(DBUserBean entity) {
-        if(entity != null) {
-            return entity.getUserId();
-        } else {
-            return null;
-        }
+    public Void getKey(DBUserBean entity) {
+        return null;
     }
 
     @Override
