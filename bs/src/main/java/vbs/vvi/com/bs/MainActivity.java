@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,7 +25,6 @@ import vbs.vvi.com.bs.listener.RcvOnItemClickListener;
 import vbs.vvi.com.bs.listener.RcvOnItemLongClickListener;
 import vbs.vvi.com.bs.model.mainlist.MainListAdapter;
 import vbs.vvi.com.bs.utils.ImageLoader;
-import vbs.vvi.com.bs.utils.UUIDGenerator;
 
 public class MainActivity extends BaseActivity {
 
@@ -118,12 +118,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDbDatas() {
-//        List<DBUserBean> list = new ArrayList<>();
-        List<DBUserBean> list = DBManager.getInstance(BaseApplication.getApplication()).queryUserList();
-        if (list != null && list.size() != 0)
-            return;
+//        DBManager.getInstance(BaseApplication.getApplication()).insertUser(new DBUserBean(100,"100", 0, "兮夜", "18576631715", System.currentTimeMillis(), 1, 0, 0, "无", System.currentTimeMillis(), "无地址", null, 1, 0, "暂无分组"));
+        List<DBUserBean> list = new ArrayList<>();
+//        List<DBUserBean> list = DBManager.getInstance(BaseApplication.getApplication()).queryUserList();
+//        if (list != null && list.size() != 0)
+//            return;
         for (int i = 0; i < 10; i++) {
-            list.add(new DBUserBean(UUIDGenerator.getUUID(), 0, "兮夜" + i, "18576631715", System.currentTimeMillis(), 1, 0, 0, "无", System.currentTimeMillis(), "无地址", null, 1, 0, "暂无分组"));
+            list.add(new DBUserBean(100+i,"100"+i, 0, "兮夜" + i, "18576631715", System.currentTimeMillis(), 1, 0, 0, "无", System.currentTimeMillis(), "无地址", null, 1, 0, "暂无分组"));
         }
         DBManager.getInstance(BaseApplication.getApplication()).insertUserList(list);
     }

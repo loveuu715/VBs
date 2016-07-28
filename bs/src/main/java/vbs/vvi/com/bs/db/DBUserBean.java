@@ -2,12 +2,15 @@ package vbs.vvi.com.bs.db;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * Created by Wayne on 2016/7/21.
  */
 @Entity
 public class DBUserBean {
+    @Id(autoincrement = true)
+    private long userId;
     private String userKey;
     private int status;
     private String name;
@@ -24,11 +27,16 @@ public class DBUserBean {
     private int groupInfo;
     private String groupName;
 
-    @Generated(hash = 973221816)
-    public DBUserBean(String userKey, int status, String name, String phone, long birthday,
-            int tipSetting, int gender, int important, String remark, long createTime,
-            String address, String avatarPath, int relationship, int groupInfo,
-            String groupName) {
+    @Generated(hash = 613699683)
+    public DBUserBean() {
+    }
+
+    @Generated(hash = 1420592871)
+    public DBUserBean(long userId, String userKey, int status, String name, String phone,
+            long birthday, int tipSetting, int gender, int important, String remark,
+            long createTime, String address, String avatarPath, int relationship,
+            int groupInfo, String groupName) {
+        this.userId = userId;
         this.userKey = userKey;
         this.status = status;
         this.name = name;
@@ -44,10 +52,6 @@ public class DBUserBean {
         this.relationship = relationship;
         this.groupInfo = groupInfo;
         this.groupName = groupName;
-    }
-
-    @Generated(hash = 613699683)
-    public DBUserBean() {
     }
 
     public String getUserKey() {
@@ -168,5 +172,13 @@ public class DBUserBean {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }
