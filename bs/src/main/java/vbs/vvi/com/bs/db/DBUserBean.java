@@ -33,9 +33,9 @@ public class DBUserBean {
 
     @Generated(hash = 1420592871)
     public DBUserBean(long userId, String userKey, int status, String name, String phone,
-            long birthday, int tipSetting, int gender, int important, String remark,
-            long createTime, String address, String avatarPath, int relationship,
-            int groupInfo, String groupName) {
+                      long birthday, int tipSetting, int gender, int important, String remark,
+                      long createTime, String address, String avatarPath, int relationship,
+                      int groupInfo, String groupName) {
         this.userId = userId;
         this.userKey = userKey;
         this.status = status;
