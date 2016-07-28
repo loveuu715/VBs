@@ -63,7 +63,7 @@ public class DBManager {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
-        userDao.insert(user);
+        userDao.insertOrReplace(user);
     }
 
     /**
@@ -72,13 +72,12 @@ public class DBManager {
      * @param users
      */
     public synchronized void insertUserList(List<DBUserBean> users) {
-        if (users == null || users.isEmpty()) {
+        if (users == null || users.isEmpty())
             return;
-        }
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
-        userDao.insertInTx(users);
+        userDao.insertOrReplaceInTx(users);
     }
 
     /**
@@ -125,8 +124,18 @@ public class DBManager {
         DaoSession daoSession = daoMaster.newSession();
         DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
         QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
-        qb.where(DBUserBeanDao.Properties.UserKey.gt(userKey)).orderAsc(DBUserBeanDao.Properties.UserKey);
+        qb.where(DBUserBeanDao.Properties.UserKey.gt(userKey));
         List<DBUserBean> list = qb.list();
         return list;
+    }
+
+    public DBUserBean queryUser(String userKey) {
+        DBUserBean userBean = null;
+        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
+        QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
+        userBean = qb.where(DBUserBeanDao.Properties.UserKey.gt(userKey)).unique();
+        return userBean;
     }
 }
