@@ -23,8 +23,11 @@ import vbs.vvi.com.bs.db.DBManager;
 import vbs.vvi.com.bs.db.DBUserBean;
 import vbs.vvi.com.bs.listener.RcvOnItemClickListener;
 import vbs.vvi.com.bs.listener.RcvOnItemLongClickListener;
+import vbs.vvi.com.bs.model.contact.ContactListActivity;
 import vbs.vvi.com.bs.model.mainlist.MainListAdapter;
 import vbs.vvi.com.bs.utils.ImageLoader;
+import vbs.vvi.com.bs.utils.SceneManager;
+import vbs.vvi.com.bs.utils.ToastUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -54,7 +57,7 @@ public class MainActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                SceneManager.toScene(mContext, ContactListActivity.class, null);
             }
         });
 
@@ -74,7 +77,8 @@ public class MainActivity extends BaseActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mRefreshLayout.setRefreshing(false);
+                        if (mRefreshLayout != null)
+                            mRefreshLayout.setRefreshing(false);
                     }
                 }, 2000);
             }
@@ -104,14 +108,14 @@ public class MainActivity extends BaseActivity {
         mainListAdapter.setOnItemClickListener(new RcvOnItemClickListener() {
             @Override
             public void onItemClickListener(View view, int position) {
-//                ToastUtil.show(mContext, "点击了:"+position,0);
+                ToastUtil.show(mContext, "点击了:" + position, 0);
             }
         });
 
         mainListAdapter.setOnItemLongClickListener(new RcvOnItemLongClickListener() {
             @Override
             public void onItemLongClickListener(View view, int position) {
-
+                ToastUtil.show(mContext, "长点击了:" + position, 0);
             }
         });
 
@@ -124,7 +128,7 @@ public class MainActivity extends BaseActivity {
 //        if (list != null && list.size() != 0)
 //            return;
         for (int i = 0; i < 10; i++) {
-            list.add(new DBUserBean(100+i,"100"+i, 0, "兮夜" + i, "18576631715", System.currentTimeMillis(), 1, 0, 0, "无", System.currentTimeMillis(), "无地址", null, 1, 0, "暂无分组"));
+            list.add(new DBUserBean(100 + i, "100" + i, 0, "兮夜" + i, "18576631715", System.currentTimeMillis(), 1, 0, 0, "无", System.currentTimeMillis(), "无地址", null, 1, 0, "暂无分组"));
         }
         DBManager.getInstance(BaseApplication.getApplication()).insertUserList(list);
     }
