@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getContext();
         methodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         EventBus.getDefault().register(this);
     }
@@ -57,6 +59,7 @@ public abstract class BaseFragment extends Fragment {
         this.mIFragmentListener = iFragmentListener;
     }
 
+    @Subscribe
     public void onEvent(EventObject eo) {
     }
 

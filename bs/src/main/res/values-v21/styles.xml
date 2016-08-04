@@ -5,9 +5,8 @@
         <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
-
     <style name="MainTheme" parent="AppTheme.Base">
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

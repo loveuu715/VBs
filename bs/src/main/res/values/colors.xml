@@ -6,4 +6,7 @@
     <color name="color_trans_status_bar">#2000</color>
     <color name="main_bg">#F5F5F5</color>
     <color name="main_bg_dark">#66dcdcdc</color>
+    <color name="main_bg_dark1">#C4C4C4</color>
+    <color name="transparent">#0000</color>
+    <color name="trans_gray">#6000</color>
 </resources>

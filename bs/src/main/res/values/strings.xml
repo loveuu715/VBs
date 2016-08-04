@@ -5,7 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="main_title">生日列表</string>
+    <string name="title_main">生日列表</string>
+    <string name="title_add_user">添加生日</string>
 
 
     <!--XRecyclerView start-->

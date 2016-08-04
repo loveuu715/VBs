@@ -34,9 +34,9 @@ public abstract class BaseRefreshFragment extends BaseFragment {
 
     @Override
     protected void init() {
-        itemDecoration = new SpacesItemDecoration(UIUtils.dip2px(mContext, 12));
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
-                android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        itemDecoration = new SpacesItemDecoration(UIUtils.dip2px(mContext, 10));
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, android.R.color.holo_green_light,
+                android.R.color.holo_blue_light, android.R.color.holo_red_light);
         final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -53,7 +53,6 @@ public abstract class BaseRefreshFragment extends BaseFragment {
                 onRefreshListener.onRefresh(); // 第一次必须手动调用，直接调用setRefreshing不会触发onRefresh方法
             }
         }, 50);
-
 
         recycleView.setPullRefreshEnabled(false);
         recycleView.setLoadingMoreEnabled(true);

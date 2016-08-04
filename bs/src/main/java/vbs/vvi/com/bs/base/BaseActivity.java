@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import vbs.vvi.com.bs.BaseApplication;
+import vbs.vvi.com.bs.R;
 import vbs.vvi.com.bs.common.events.EventObject;
 
 /**
@@ -63,6 +64,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(EventObject eventObject) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, R.anim.b_exit_anim);
     }
 
     @Override

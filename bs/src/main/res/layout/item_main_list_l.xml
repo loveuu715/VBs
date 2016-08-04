@@ -4,15 +4,23 @@
                                     android:id="@+id/cv_my_home_page_listview_cardview"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="15dp"
                                     android:clickable="true"
                                     android:foreground="?android:attr/selectableItemBackground"
-                                    card_view:cardCornerRadius="8dp"
-                                    card_view:cardElevation="8dp">
+                                    card_view:cardCornerRadius="5dp"
+                                    card_view:cardElevation="3dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_main_list_gender"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="8dp"
+            android:src="@mipmap/male"/>
 
         <vbs.vvi.com.bs.ui.CircleImageView
             android:id="@+id/civ_mainList_avatar"
