@@ -12,7 +12,7 @@ import java.util.List;
 import vbs.vvi.com.bs.R;
 import vbs.vvi.com.bs.bean.ContactBean;
 import vbs.vvi.com.bs.ui.CircleImageView;
-import vbs.vvi.com.bs.utils.ToastUtil;
+import vbs.vvi.com.bs.utils.TipUtil;
 
 /**
  * Created by Wayne on 2016/7/29.
@@ -33,7 +33,7 @@ public class ContactListAdapter extends SuperAdapter<ContactBean> {
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtil.show(getContext(),"点击了联系人:"+item.getName(),0);
+                TipUtil.showToast(getContext(),"点击了联系人:"+item.getName());
             }
         });
 

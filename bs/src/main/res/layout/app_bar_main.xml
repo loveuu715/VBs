@@ -50,11 +50,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/main_bg_dark"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!--<include layout="@layout/content_main"/>-->
+        <ScrollView
+            android:visibility="gone"
+            android:id="@+id/rl_empty_view_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/empty_bg_1"
+                    android:id="@+id/iv_main_empty_view_gif"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"/>
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@id/iv_main_empty_view_gif"
+                    android:id="@+id/tv_main_empty_view_reload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="哇哦，亲爱的. 还没记录呢.."/>
+
+            </RelativeLayout>
+        </ScrollView>
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton

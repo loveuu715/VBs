@@ -11,10 +11,13 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import org.byteam.superadapter.recycler.OnItemClickListener;
 import org.byteam.superadapter.recycler.SuperAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import vbs.vvi.com.bs.BaseApplication;
 import vbs.vvi.com.bs.R;
 import vbs.vvi.com.bs.base.BaseRefreshFragment;
+import vbs.vvi.com.bs.db.DBManager;
 import vbs.vvi.com.bs.db.DBUserBean;
 
 /**
@@ -23,47 +26,69 @@ import vbs.vvi.com.bs.db.DBUserBean;
  */
 public class MainListFragment extends BaseRefreshFragment {
 
-    private List<DBUserBean> mDatas;
+    private List<DBUserBean> mDatas = new ArrayList<>();
     private Context mContext;
+    private MainAdapter mMainAdapter;
 
-    public MainListFragment(List<DBUserBean> datas, Context context) {
-        mDatas = datas;
+    public MainListFragment(Context context) {
         mContext = context;
     }
 
     @Override
     protected void refreshData(final SwipeRefreshLayout refreshLayout) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (refreshLayout != null)
+        pageNo = 1;
+        refreshDatas(DBManager.getInstance(BaseApplication.getApplication()).queryOffset(pageNo));
+        if (refreshLayout != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     refreshLayout.setRefreshing(false);
-            }
-        }, 2000);
+                }
+            }, 1000);
+        }
     }
 
     @Override
     protected void loadData(final XRecyclerView recycleView) {
+        pageNo++;
+        loadMore(DBManager.getInstance(BaseApplication.getApplication()).queryOffset(pageNo));
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (recycleView != null)
                     recycleView.loadMoreComplete();
             }
-        }, 2000);
+        }, 1000);
     }
 
     @Override
     protected SuperAdapter getAdapter() {
-        MainAdapter mainAdapter = new MainAdapter(mContext, mDatas, R.layout.item_main_list_l);
+        mMainAdapter = new MainAdapter(mContext, mDatas, R.layout.item_main_list_l);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            mainAdapter = new MainAdapter(mContext, mDatas, R.layout.item_main_list);
-        mainAdapter.setOnItemClickListener(new OnItemClickListener() {
+            mMainAdapter = new MainAdapter(mContext, mDatas, R.layout.item_main_list);
+        mMainAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
                 //TODO 生日详情
             }
         });
-        return mainAdapter;
+        return mMainAdapter;
+    }
+
+    public void refreshDatas(List<DBUserBean> datas) {
+        pageNo = 1;
+        if (mMainAdapter != null) {
+            mMainAdapter.getList().clear();
+            mMainAdapter.addAll(datas);
+            mMainAdapter.notifyDataSetChanged();
+            recycleView.smoothScrollToPosition(0);
+        }
+    }
+
+    public void loadMore(List<DBUserBean> datas) {
+        if (mMainAdapter != null) {
+            mMainAdapter.addAll(datas);
+            mMainAdapter.notifyDataSetChanged();
+        }
     }
 }

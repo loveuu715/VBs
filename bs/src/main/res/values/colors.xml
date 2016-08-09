@@ -5,8 +5,17 @@
     <color name="colorAccent">#E48B7B</color>
     <color name="color_trans_status_bar">#2000</color>
     <color name="main_bg">#F5F5F5</color>
+    <color name="main_white">#fff</color>
     <color name="main_bg_dark">#66dcdcdc</color>
     <color name="main_bg_dark1">#C4C4C4</color>
     <color name="transparent">#0000</color>
     <color name="trans_gray">#6000</color>
+
+
+
+    <!--自定义edittext-->
+    <color name="color_selfedit_text">#333333</color>
+    <color name="color_selfedit_hint">#999999</color>
+    <color name="color_primary_dark">#663399ee</color>
+
 </resources>

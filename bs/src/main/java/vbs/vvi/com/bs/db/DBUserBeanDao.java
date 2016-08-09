@@ -38,6 +38,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         public final static Property Relationship = new Property(13, int.class, "relationship", false, "RELATIONSHIP");
         public final static Property GroupInfo = new Property(14, int.class, "groupInfo", false, "GROUP_INFO");
         public final static Property GroupName = new Property(15, String.class, "groupName", false, "GROUP_NAME");
+        public final static Property Year = new Property(16, int.class, "year", false, "YEAR");
+        public final static Property Month = new Property(17, int.class, "month", false, "MONTH");
+        public final static Property Day = new Property(18, int.class, "day", false, "DAY");
+        public final static Property BirthType = new Property(19, int.class, "birthType", false, "BIRTH_TYPE");
     };
 
 
@@ -68,7 +72,11 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
                 "\"AVATAR_PATH\" TEXT," + // 12: avatarPath
                 "\"RELATIONSHIP\" INTEGER NOT NULL ," + // 13: relationship
                 "\"GROUP_INFO\" INTEGER NOT NULL ," + // 14: groupInfo
-                "\"GROUP_NAME\" TEXT);"); // 15: groupName
+                "\"GROUP_NAME\" TEXT," + // 15: groupName
+                "\"YEAR\" INTEGER NOT NULL ," + // 16: year
+                "\"MONTH\" INTEGER NOT NULL ," + // 17: month
+                "\"DAY\" INTEGER NOT NULL ," + // 18: day
+                "\"BIRTH_TYPE\" INTEGER NOT NULL );"); // 19: birthType
     }
 
     /** Drops the underlying database table. */
@@ -124,6 +132,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         if (groupName != null) {
             stmt.bindString(16, groupName);
         }
+        stmt.bindLong(17, entity.getYear());
+        stmt.bindLong(18, entity.getMonth());
+        stmt.bindLong(19, entity.getDay());
+        stmt.bindLong(20, entity.getBirthType());
     }
 
     @Override
@@ -173,6 +185,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         if (groupName != null) {
             stmt.bindString(16, groupName);
         }
+        stmt.bindLong(17, entity.getYear());
+        stmt.bindLong(18, entity.getMonth());
+        stmt.bindLong(19, entity.getDay());
+        stmt.bindLong(20, entity.getBirthType());
     }
 
     @Override
@@ -198,7 +214,11 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
             cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // avatarPath
             cursor.getInt(offset + 13), // relationship
             cursor.getInt(offset + 14), // groupInfo
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15) // groupName
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // groupName
+            cursor.getInt(offset + 16), // year
+            cursor.getInt(offset + 17), // month
+            cursor.getInt(offset + 18), // day
+            cursor.getInt(offset + 19) // birthType
         );
         return entity;
     }
@@ -221,6 +241,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         entity.setRelationship(cursor.getInt(offset + 13));
         entity.setGroupInfo(cursor.getInt(offset + 14));
         entity.setGroupName(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setYear(cursor.getInt(offset + 16));
+        entity.setMonth(cursor.getInt(offset + 17));
+        entity.setDay(cursor.getInt(offset + 18));
+        entity.setBirthType(cursor.getInt(offset + 19));
      }
     
     @Override

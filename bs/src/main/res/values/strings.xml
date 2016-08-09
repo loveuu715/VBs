@@ -19,4 +19,18 @@
     <string name="listview_header_last_time">last update：</string>
     <!--XRecyclerView end-->
 
+
+    <string-array name="npv_lunar_year_without_measure_hint">
+        <item>二零一六</item>
+    </string-array>
+    <string-array name="npv_lunar_month_without_measure_hint">
+        <item>十一</item>
+    </string-array>
+    <string-array name="npv_lunar_day_with_measure_hint">
+        <item>初一</item>
+    </string-array>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+
 </resources>

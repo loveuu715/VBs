@@ -37,4 +37,16 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
     </style>
 
+
+    <style name="full_screen_dialog">
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
+        <!--<item name="android:backgroundDimEnabled">true</item>&lt;!&ndash;模糊&ndash;&gt;-->
+        <!--<item name="android:backgroundDimAmount">0.4</item>-->
+    </style>
+
+
 </resources>

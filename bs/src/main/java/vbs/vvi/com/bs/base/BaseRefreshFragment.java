@@ -23,7 +23,7 @@ public abstract class BaseRefreshFragment extends BaseFragment {
     @BindView(R.id.recycle_view_base_fragment)
     protected XRecyclerView recycleView;
     @BindView(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    protected SwipeRefreshLayout swipeRefreshLayout;
     private SpacesItemDecoration itemDecoration;
     protected int pageNo = 1;
 
@@ -122,4 +122,5 @@ public abstract class BaseRefreshFragment extends BaseFragment {
     protected View getHeaderView() {
         return null;
     }
+
 }

@@ -3,7 +3,7 @@
                                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                                     android:id="@+id/cv_my_home_page_listview_cardview"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="120dp"
                                     android:clickable="true"
                                     android:foreground="?android:attr/selectableItemBackground"
                                     card_view:cardCornerRadius="5dp"
@@ -21,32 +21,35 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
             android:src="@mipmap/male"/>
-
-        <vbs.vvi.com.bs.ui.CircleImageView
-            android:id="@+id/civ_mainList_avatar"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
+        <RelativeLayout
             android:layout_marginRight="15dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/default_list_avatar"
-            card_view:civ_border_color="@color/colorAccent"
-            card_view:civ_border_width="0.5dp"/>
-
-        <TextView
-            android:id="@+id/tv_mainList_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/civ_mainList_avatar"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="36dp"
-            android:layout_marginTop="5dp"
-            android:text="兮夜"
-            android:textSize="16sp"/>
+            android:layout_alignParentRight="true">
 
+            <vbs.vvi.com.bs.ui.CircleImageView
+                android:id="@+id/civ_mainList_avatar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/default_list_avatar"
+                card_view:civ_border_color="@color/colorAccent"
+                card_view:civ_border_width="0.5dp"/>
+
+            <TextView
+                android:id="@+id/tv_mainList_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/civ_mainList_avatar"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="兮夜"
+                android:textSize="16sp"/>
+        </RelativeLayout>
         <TextView
             android:id="@+id/tv_mainlist_days"
             android:layout_width="wrap_content"
@@ -67,10 +70,11 @@
             />
 
         <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
             android:id="@+id/tv_mainlist_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/tv_mainList_name"
             android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/icon_default_birthday"
             android:gravity="center_vertical"

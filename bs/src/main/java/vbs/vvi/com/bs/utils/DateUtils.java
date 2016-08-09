@@ -6,10 +6,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * 日期相关工具类
- * Created by Wayne on 2016/7/21.
+ * Copyright © Avatar 2016
+ *
+ * @ProjectName: BirthdayStewart
+ * @Description: //TODO
+ * @Author: wayne
+ * @CreationTime: 2016/1/15 19:31
  */
-public class DateUtil {
+public class DateUtils {
+
+    private static int currentYear;
+    private static int currentMonth;
+    private static int currentDay;
 
     /**
      * 英文简写如：2016
@@ -78,6 +86,8 @@ public class DateUtil {
 
     public static Calendar calendar = null;
     private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+
 
 
     public static Date str2Date(String str) {
@@ -150,6 +160,7 @@ public class DateUtil {
         String s = sdf.format(d);
         return s;
     }
+
 
 
     public static String getCurDateStr() {
@@ -422,4 +433,125 @@ public class DateUtil {
         long t1 = c.getTime().getTime();
         return (int) (t / 1000 - t1 / 1000) / 3600 / 24;
     }
+
+
+    //-----------------------------------------------------
+
+    /**
+     * 获得指定格式的年月日 eg:2016-01-01
+     * 0年   1月   2日
+     *
+     * @param str
+     * @return
+     */
+    public static int[] getYearMonthDay(String str) {
+        int[] result = new int[3];
+        String[] strs = str.split("-");
+        result[0] = Integer.parseInt(strs[0]);
+        result[1] = Integer.parseInt(strs[1]);
+        result[2] = Integer.parseInt(strs[2]);
+        return result;
+    }
+
+    /**
+     * 获得当前年
+     *
+     * @return
+     */
+    public static int getCurrentYear() {
+        getCurrentDayDetails();
+        return currentYear;
+    }
+
+    /**
+     * 获得当前月
+     *
+     * @return
+     */
+    public static int getCurrentMonth() {
+        getCurrentDayDetails();
+        return currentMonth;
+    }
+
+    /**
+     * 获得当前日
+     *
+     * @return
+     */
+    public static int getCurrentDay() {
+        getCurrentDayDetails();
+        return currentDay;
+    }
+
+    /**
+     * 获得当前的年月日
+     */
+    private static void getCurrentDayDetails() {
+        Calendar calendar = Calendar.getInstance();
+        currentYear = calendar.get(Calendar.YEAR);
+        currentMonth = calendar.get(Calendar.MONTH) + 1;
+        currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * 获得指定生日到现在的天数
+     *
+     * @param birthday
+     * @return
+     */
+    public static int getBirthdayDays(String birthday) {
+        return getGapCount(getDate(birthday), getDate(getFormatDate()));
+    }
+
+
+    /**
+     * 获得当前格式化的日期 eg:2016-01-01
+     *
+     * @return
+     */
+    public static String getFormatDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(new Date().getTime());
+    }
+
+    /**
+     * 获得指定的字符串的相对应的日期
+     *
+     * @param str
+     * @return
+     */
+    public static Date getDate(String str) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = (Date) simpleDateFormat.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    /**
+     * 获取两个日期之间的间隔天数
+     *
+     * @return
+     */
+    public static int getGapCount(Date startDate, Date endDate) {
+        Calendar fromCalendar = Calendar.getInstance();
+        fromCalendar.setTime(startDate);
+        fromCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        fromCalendar.set(Calendar.MINUTE, 0);
+        fromCalendar.set(Calendar.SECOND, 0);
+        fromCalendar.set(Calendar.MILLISECOND, 0);
+
+        Calendar toCalendar = Calendar.getInstance();
+        toCalendar.setTime(endDate);
+        toCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        toCalendar.set(Calendar.MINUTE, 0);
+        toCalendar.set(Calendar.SECOND, 0);
+        toCalendar.set(Calendar.MILLISECOND, 0);
+
+        return (int) ((toCalendar.getTime().getTime() - fromCalendar.getTime().getTime()) / (1000 * 60 * 60 * 24));
+    }
+
 }

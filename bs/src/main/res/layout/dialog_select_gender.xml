@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/main_white"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:background="@color/main_bg_dark1"
+            android:id="@+id/fl_dialog_select_gender_cancel"
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            >
+
+            <TextView
+                android:layout_margin="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_white"
+                android:gravity="center"
+                android:text="取消"
+                android:textSize="16sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_dialog_select_gender_confirm"
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:background="@color/main_white"
+                android:gravity="center"
+                android:text="确定"
+                android:textSize="16sp"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_dialog_select_gender_male_root"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/main_white"
+        android:clickable="true">
+
+        <CheckBox
+            android:id="@+id/cb_dialog_select_gender_male"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:button="@drawable/cb_selector"
+            android:clickable="false"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/cb_dialog_select_gender_male"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="15dp"
+            android:text="男"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorAccent"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_dialog_select_gender_female_root"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/main_white"
+        android:clickable="true">
+
+        <CheckBox
+            android:id="@+id/cb_dialog_select_gender_female"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:button="@drawable/cb_selector"
+            android:clickable="false"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/cb_dialog_select_gender_female"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="15dp"
+            android:text="女"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+</LinearLayout>

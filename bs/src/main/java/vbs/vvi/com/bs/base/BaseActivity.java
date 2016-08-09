@@ -62,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onEvent(EventObject eventObject) {
+    public void onEvent(EventObject eo) {
 
     }
 

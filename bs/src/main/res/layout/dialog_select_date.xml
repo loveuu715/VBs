@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/main_white"
+              android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_dialog_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <vbs.vvi.com.bs.ui.lunarcalendar.GregorianLunarCalendarView
+        android:id="@+id/glcv_addUser_select_date"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/main_white"
+        app:glcv_GregorianThemeColor="@color/colorAccent"
+        app:glcv_LunarThemeColor="@color/colorAccent"
+        app:glcv_NormalTextColor="#FF777777"
+        app:glcv_ScrollAnimation="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@color/main_bg_dark1">
+
+            <TextView
+                android:id="@+id/tv_dialog_select_date_cancel"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_margin="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="取消"
+                android:textSize="16sp"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/tv_dialog_select_date_confirm"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_margin="1dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="确定"
+                android:textSize="16sp"/>
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>

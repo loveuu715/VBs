@@ -8,7 +8,8 @@ import org.greenrobot.greendao.query.QueryBuilder;
 import java.util.List;
 
 /**
- * Created by Wayne on 2016/7/21.
+ * Created by Wayne on 2016/8/9.
+ * Email: loveuu715@163.com
  */
 public class DBManager {
     private final static String dbName = "DBUSER_BEAN";
@@ -112,8 +113,8 @@ public class DBManager {
         DaoSession daoSession = daoMaster.newSession();
         DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
         QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
-        List<DBUserBean> list = qb.list();
-        return list;
+        qb.orderDesc(DBUserBeanDao.Properties.CreateTime);
+        return qb.list();
     }
 
     /**
@@ -124,11 +125,17 @@ public class DBManager {
         DaoSession daoSession = daoMaster.newSession();
         DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
         QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
+        qb.orderDesc(DBUserBeanDao.Properties.CreateTime);
         qb.where(DBUserBeanDao.Properties.UserKey.gt(userKey));
         List<DBUserBean> list = qb.list();
         return list;
     }
 
+    /**
+     * 唯一查询
+     * @param userKey
+     * @return
+     */
     public DBUserBean queryUser(String userKey) {
         DBUserBean userBean = null;
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
@@ -137,5 +144,22 @@ public class DBManager {
         QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
         userBean = qb.where(DBUserBeanDao.Properties.UserKey.gt(userKey)).unique();
         return userBean;
+    }
+
+    /**
+     * 分页查询 降序
+     * @param page
+     * @return
+     */
+    public List<DBUserBean> queryOffset(int page) {
+        DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        DBUserBeanDao userDao = daoSession.getDBUserBeanDao();
+        QueryBuilder<DBUserBean> qb = userDao.queryBuilder();
+        qb.orderDesc(DBUserBeanDao.Properties.CreateTime);
+        if (page > 0)
+            qb.offset(5 * (page - 1));
+        qb.limit(5);
+        return qb.list();
     }
 }

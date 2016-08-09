@@ -31,7 +31,7 @@ public class LocalExceptionHelper extends ExceptionHelper {
         if (ex == null)
             return false;
 
-        ThreadUtil.sExecutorService.execute(new Runnable() {
+        ThreadUtil.execut(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();

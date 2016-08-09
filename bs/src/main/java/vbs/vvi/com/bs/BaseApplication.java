@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import vbs.vvi.com.bs.net.NetIntercept;
 import vbs.vvi.com.bs.utils.LogUtil;
-import vbs.vvi.com.bs.utils.ToastUtil;
+import vbs.vvi.com.bs.utils.TipUtil;
 
 /**
  * Created by Wayne on 2016/7/19.
@@ -44,7 +44,7 @@ public class BaseApplication extends Application {
     }
 
     private void initToast() {
-        ToastUtil.isShow = true;
+        TipUtil.isShow = true;
     }
 
     private void initLogConfig() {
