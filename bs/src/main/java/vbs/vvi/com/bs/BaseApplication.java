@@ -2,8 +2,11 @@ package vbs.vvi.com.bs;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.multidex.MultiDex;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
@@ -13,8 +16,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.finalteam.galleryfinal.CoreConfig;
+import cn.finalteam.galleryfinal.FunctionConfig;
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.ImageLoader;
+import cn.finalteam.galleryfinal.ThemeConfig;
 import okhttp3.OkHttpClient;
 import vbs.vvi.com.bs.net.NetIntercept;
+import vbs.vvi.com.bs.utils.GFImageLoader;
 import vbs.vvi.com.bs.utils.LogUtil;
 import vbs.vvi.com.bs.utils.TipUtil;
 
@@ -32,15 +41,47 @@ public class BaseApplication extends Application {
 
     @Override
     public void onCreate() {
+        MultiDex.install(this);
         super.onCreate();
         init();
     }
 
     private void init() {
         initConstants();
+        initGalleryFinalConfig();
 //        initOkHttpConfig();
         initLogConfig();
         initToast();
+    }
+
+    private void initGalleryFinalConfig() {
+        //ThemeConfig.CYAN
+        int color = Color.rgb(0x33, 0x99, 0xee);
+        ThemeConfig theme = new ThemeConfig.Builder()
+                .setTitleBarBgColor(color)
+                .setFabNornalColor(color)
+                .setCheckSelectedColor(color)
+                .setFabPressedColor(color)
+                .build();
+        //配置功能
+        FunctionConfig functionConfig = new FunctionConfig.Builder()
+                .setEnableCamera(true)//相机是否可见
+                .setEnableEdit(false)//是否可编辑
+                .setEnableCrop(true)//是否可裁剪
+                .setEnableRotate(true)//是否可旋转
+                .setCropSquare(true)//是否正方形裁剪
+                .setEnablePreview(true)//是否显示预览
+                .setMutiSelectMaxSize(12)//最大选择数量
+                .build();
+
+        //配置imageloader
+        ImageLoader imageloader = new GFImageLoader();
+        CoreConfig coreConfig = new CoreConfig.Builder(getApplicationContext(), imageloader, theme)
+//                .setDebug(BuildConfig.DEBUG)
+                .setFunctionConfig(functionConfig)
+                .setAnimation(R.anim.scale_in_90)
+                .build();
+        GalleryFinal.init(coreConfig);
     }
 
     private void initToast() {
@@ -115,5 +156,11 @@ public class BaseApplication extends Application {
         }
         sActivities.clear();
         sActivities.add(activity);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        MultiDex.install(this);
+        super.attachBaseContext(base);
     }
 }

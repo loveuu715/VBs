@@ -3,6 +3,7 @@
     <color name="colorPrimary">#E48B7B</color>
     <color name="colorPrimaryDark">#E48B7B</color>
     <color name="colorAccent">#E48B7B</color>
+    <color name="colorAccentDark">#88E48B7B</color>
     <color name="color_trans_status_bar">#2000</color>
     <color name="main_bg">#F5F5F5</color>
     <color name="main_white">#fff</color>

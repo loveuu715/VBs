@@ -122,6 +122,7 @@
                         android:textSize="17sp"/>
 
                     <TextView
+                        android:drawablePadding="3dp"
                         android:id="@+id/tv_addUser_birthday"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -172,6 +173,7 @@
                         android:inputType="phone"
                         android:background="@null"
                         android:cursorVisible="true"
+                        android:maxLength="11"
                         android:hint="请输入手机号"
                         android:paddingLeft="10dp"
                         android:singleLine="true"
@@ -207,9 +209,10 @@
                         android:layout_toRightOf="@id/inner_tv_addUser_remarkTip"
                         android:background="@null"
                         android:cursorVisible="true"
+                        android:maxLines="2"
+                        android:ellipsize="end"
                         android:hint="这里添加备注哦..."
                         android:paddingLeft="10dp"
-                        android:singleLine="true"
                         android:textSize="17sp"/>
 
                 </RelativeLayout>

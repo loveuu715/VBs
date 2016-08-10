@@ -3,50 +3,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/main_white"
+              android:layoutAnimation="@anim/pic_select_layout_animation"
               android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp">
-
-        <FrameLayout
-            android:background="@color/main_bg_dark1"
-            android:id="@+id/fl_dialog_select_gender_cancel"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            >
-
-            <TextView
-                android:layout_margin="1dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/main_white"
-                android:gravity="center"
-                android:text="取消"
-                android:textSize="16sp"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/fl_dialog_select_gender_confirm"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:background="@color/colorAccent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
-                android:background="@color/main_white"
-                android:gravity="center"
-                android:text="确定"
-                android:textSize="16sp"/>
-        </FrameLayout>
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_dialog_select_gender_male_root"

@@ -1,1 +1,1 @@
-include ':demo', ':bs'
+include ':demo', ':bs', ':galleryfinal-lib'

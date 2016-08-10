@@ -1,5 +1,6 @@
 package vbs.vvi.com.bs.model.adduser;
 
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -13,11 +14,15 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import vbs.vvi.com.bs.BaseApplication;
+import cn.finalteam.galleryfinal.FunctionConfig;
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.model.PhotoInfo;
 import vbs.vvi.com.bs.R;
 import vbs.vvi.com.bs.base.BaseActivity;
 import vbs.vvi.com.bs.common.events.EventIds;
@@ -25,11 +30,12 @@ import vbs.vvi.com.bs.common.events.EventObject;
 import vbs.vvi.com.bs.db.DBManager;
 import vbs.vvi.com.bs.db.DBUserBean;
 import vbs.vvi.com.bs.ui.CircleImageView;
-import vbs.vvi.com.bs.ui.SlideUpDialog;
+import vbs.vvi.com.bs.ui.dialog.SlideUpDialog;
 import vbs.vvi.com.bs.ui.edittext.EditTextX;
 import vbs.vvi.com.bs.ui.lunarcalendar.ChineseCalendar;
 import vbs.vvi.com.bs.utils.DateUtils;
 import vbs.vvi.com.bs.utils.DialogManager;
+import vbs.vvi.com.bs.utils.GFCommonConfig;
 import vbs.vvi.com.bs.utils.ImageLoader;
 import vbs.vvi.com.bs.utils.ThreadUtil;
 import vbs.vvi.com.bs.utils.TipUtil;
@@ -39,7 +45,12 @@ import vbs.vvi.com.bs.utils.UUIDGenerator;
  * Created by Wayne on 2016/8/3.
  * Email: loveuu715@163.com
  */
-public class AddUserActivity extends BaseActivity {
+public class AddUserActivity extends BaseActivity implements GalleryFinal.OnHanlderResultCallback {
+
+    private static final int REQUEST_SELECT_PICTURE = 0x02;//选择相册图片
+    private static final int REQUEST_SELECT_CAMERA = 0x4;//选择拍照
+    private static final int REQUEST_CODE_CROP = 0x6;//裁剪图片
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fab_add_user)
@@ -59,7 +70,6 @@ public class AddUserActivity extends BaseActivity {
     @BindView(R.id.edt_addUser_remark)
     EditTextX mRemark;
     private Calendar mCalendar;
-    private int mPosition;
     private int mGenderPos;
     private int mYear;
     private int mMonth;
@@ -68,6 +78,7 @@ public class AddUserActivity extends BaseActivity {
     private int mLYear;
     private int mLMonth;
     private int mLDay;
+    private String mCropPhotoPath;
 
 
     @Override
@@ -102,6 +113,7 @@ public class AddUserActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.civ_add_user_avatar:
+                showPhotoSelectDialog();
                 break;
             case R.id.tv_addUser_gender:
                 showGenderDialog();
@@ -112,13 +124,37 @@ public class AddUserActivity extends BaseActivity {
         }
     }
 
-    private void showGenderDialog() {
-        DialogManager.showSelectGenderDialog(mContext, mGenderPos, new DialogManager.OnGenderSelectListener() {
+    private void showPhotoSelectDialog() {
+        DialogManager.showSelectPhoto(mContext, new DialogManager.OnPhotoDialogListener() {
             @Override
-            public void onGenderCancel(SlideUpDialog slideUpDialog) {
-                slideUpDialog.dismiss();
+            public void onCancel(SlideUpDialog dialog) {
+                dialog.dismiss();
             }
 
+            @Override
+            public void onTakePhoto(SlideUpDialog dialog) {
+                takePhoto();
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onGalleryPhoto(SlideUpDialog dialog) {
+                getPhotoFromGallery();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void takePhoto() {
+        GalleryFinal.openCamera(REQUEST_SELECT_CAMERA, GFCommonConfig.crop(), this);
+    }
+
+    private void getPhotoFromGallery() {
+        GalleryFinal.openGallerySingle(REQUEST_SELECT_PICTURE, GFCommonConfig.crop(), this);
+    }
+
+    private void showGenderDialog() {
+        DialogManager.showSelectGenderDialog(mContext, mGenderPos, new DialogManager.OnGenderSelectListener() {
             @Override
             public void onGenderConfirm(SlideUpDialog slideUpDialog, int position) {
                 mGenderPos = position;
@@ -154,15 +190,23 @@ public class AddUserActivity extends BaseActivity {
                 mLMonth = calendar.get(ChineseCalendar.CHINESE_MONTH);//获取农历月 5//注意，如果是闰五月则返回-5
                 mLDay = calendar.get(ChineseCalendar.CHINESE_DATE);//获取农历日 20
 
-                if (mBirthType == 0) {//公历
-                    mBirthday.setText(mYear + "年 " + mMonth + "月 " + mDay + "日");
-                } else {//农历
-                    String tip = mLYear + "年 " + mLMonth + "月 " + mLDay + "日";
-                    if (mMonth < 0) {
+                String tip = mYear + "年 " + mMonth + "月 " + mDay + "日";
+                if (mBirthType == 1) {//农历
+                    tip = mLYear + "年 " + mLMonth + "月 " + mLDay + "日";
+                    if (mLMonth < 0) {
                         tip = mLYear + "年 润" + Math.abs(mLMonth) + "月 " + mLDay + "日";
                     }
-                    mBirthday.setText(tip);
                 }
+                Drawable drawable;
+                if (mBirthType == 0)
+                    drawable = getResources().getDrawable(R.mipmap.calendar_gong);
+                else
+                    drawable = getResources().getDrawable(R.mipmap.calendar_nong);
+
+                // 这一步必须要做,否则不会显示.
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                mBirthday.setCompoundDrawables(drawable, null, null, null);
+                mBirthday.setText(tip);
                 slideUpDialog.dismiss();
             }
 
@@ -226,7 +270,7 @@ public class AddUserActivity extends BaseActivity {
             userBean.setImportant(0);//是否重点关注 0 否 1 是
             userBean.setRemark(remark);//备注
             userBean.setAddress("无");//地址
-            userBean.setAvatarPath("");//头像地址
+            userBean.setAvatarPath(mCropPhotoPath);//头像地址
             userBean.setRelationship(0);//关系类型 待定
             userBean.setGroupInfo(0);//分组类型 待定
             userBean.setGroupName("无");//组名
@@ -234,6 +278,9 @@ public class AddUserActivity extends BaseActivity {
             userBean.setMonth(mMonth);//生日月份
             userBean.setDay(mDay);//生日日期
             userBean.setBirthType(mBirthType);//生日日期类型 0 公历 1农历
+            userBean.setLYear(mLYear);//农历年份
+            userBean.setLMonth(mLMonth);//农历月份
+            userBean.setLDay(mLDay);//农历日
 
             DBManager.getInstance(mContext).insertUser(userBean);
 
@@ -242,11 +289,44 @@ public class AddUserActivity extends BaseActivity {
                 public void run() {
                     EventBus.getDefault().post(new EventObject(EventIds.ID.UPDATE_MAIN_USER_INFO, null));
                 }
-            }, 30);
+            }, 50);
             onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+
+        switch (reqeustCode) {
+            case REQUEST_SELECT_PICTURE:
+                if (resultList != null) {
+                    GalleryFinal.openCrop(REQUEST_CODE_CROP, GFCommonConfig.crop(), resultList.get(0).getPhotoPath(), this);
+                }
+                break;
+            case REQUEST_SELECT_CAMERA:
+                if (resultList != null) {
+                    GalleryFinal.openCrop(REQUEST_CODE_CROP, GFCommonConfig.crop(), resultList.get(0).getPhotoPath(), this);
+                }
+                break;
+            case REQUEST_CODE_CROP:
+                if (resultList != null) {
+                    mCropPhotoPath = resultList.get(0).getPhotoPath();
+                    ThreadUtil.safeRun(new Runnable() {
+                        @Override
+                        public void run() {
+                            ImageLoader.display(mContext, mCivAvatar, mCropPhotoPath);
+                            ImageLoader.displayWithBlur(mContext, mImageViewBg, mCropPhotoPath, 33);
+                        }
+                    });
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onHanlderFailure(int requestCode, String errorMsg) {
+        TipUtil.showToast(errorMsg);
+    }
 }

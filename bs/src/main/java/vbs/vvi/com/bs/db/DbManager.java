@@ -17,7 +17,7 @@ public class DBManager {
     private DaoMaster.DevOpenHelper openHelper;
     private Context context;
 
-    public DBManager(Context context) {
+    private DBManager(Context context) {
         this.context = context;
         openHelper = new DaoMaster.DevOpenHelper(context, dbName, null);
     }

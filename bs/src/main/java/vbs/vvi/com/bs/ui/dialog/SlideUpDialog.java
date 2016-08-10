@@ -1,4 +1,4 @@
-package vbs.vvi.com.bs.ui;
+package vbs.vvi.com.bs.ui.dialog;
 
 import android.animation.ObjectAnimator;
 import android.app.Dialog;

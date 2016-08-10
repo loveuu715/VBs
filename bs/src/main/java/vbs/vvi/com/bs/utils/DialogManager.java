@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import java.util.Calendar;
 
 import vbs.vvi.com.bs.R;
-import vbs.vvi.com.bs.ui.SlideUpDialog;
+import vbs.vvi.com.bs.ui.dialog.SlideUpDialog;
 import vbs.vvi.com.bs.ui.lunarcalendar.GregorianLunarCalendarView;
 
 /**
@@ -19,10 +19,11 @@ import vbs.vvi.com.bs.ui.lunarcalendar.GregorianLunarCalendarView;
 public class DialogManager {
 
     private static GregorianLunarCalendarView sMCalendarView;
-    private static SlideUpDialog sMSlideUpDialog;
-    private static SlideUpDialog sSlideUpDialog;
-    private static int sGenderPosition;
+    private static SlideUpDialog sDateDialog;
+    private static SlideUpDialog sGenderDialog;
     private static int sDateType;
+    private static SlideUpDialog sPhotoDialog;
+    private static TabLayout sTabLayout;
 
     public interface OnDateSelectListener {
         void onTabClick(SlideUpDialog slideUpDialog, TabLayout.Tab tab);
@@ -33,33 +34,43 @@ public class DialogManager {
     }
 
     public interface OnGenderSelectListener {
-        void onGenderCancel(SlideUpDialog slideUpDialog);
-
         void onGenderConfirm(SlideUpDialog slideUpDialog, int position);
     }
 
+    public interface OnPhotoDialogListener {
+        void onCancel(SlideUpDialog dialog);
+
+        void onTakePhoto(SlideUpDialog dialog);
+
+        void onGalleryPhoto(SlideUpDialog dialog);
+    }
+
     public static SlideUpDialog showSelectDateDailog(final Context context, final Calendar calendar, final boolean isLruaCalendar, final OnDateSelectListener listener) {
-        sMSlideUpDialog = new SlideUpDialog(context).bindView(R.layout.dialog_select_date, new SlideUpDialog.BindViewListener() {
+        sDateDialog = new SlideUpDialog(context).bindView(R.layout.dialog_select_date, new SlideUpDialog.BindViewListener() {
             @Override
             public void onBind(View contentView) {
-                initCalendarView(sMSlideUpDialog, contentView, calendar, isLruaCalendar, listener);
+                initCalendarView(sDateDialog, contentView, calendar, isLruaCalendar, listener);
             }
         });
-        sMSlideUpDialog.show();
-        return sMSlideUpDialog;
+        sDateDialog.show();
+        return sDateDialog;
     }
 
     private static void initCalendarView(final SlideUpDialog slideUpDialog, View contentView, Calendar calendar, boolean isLruaCalendar, final OnDateSelectListener listener) {
         sMCalendarView = (GregorianLunarCalendarView) contentView.findViewById(R.id.glcv_addUser_select_date);
-        TabLayout tabLayout = (TabLayout) contentView.findViewById(R.id.tl_dialog_select_date);
-        tabLayout.addTab(tabLayout.newTab().setText("公历"));
-        tabLayout.addTab(tabLayout.newTab().setText("农历"));
-        tabLayout.setSelectedTabIndicatorHeight(2);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        sTabLayout = (TabLayout) contentView.findViewById(R.id.tl_dialog_select_date);
+        sTabLayout.addTab(sTabLayout.newTab().setText("公历"));
+        if (isLruaCalendar) {
+            sTabLayout.addTab(sTabLayout.newTab().setText("农历"), 1, true);
+        } else {
+            sTabLayout.addTab(sTabLayout.newTab().setText("农历"));
+        }
+        sTabLayout.setSelectedTabIndicatorHeight(2);
+        sTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (listener != null)
-                    listener.onTabClick(sMSlideUpDialog, tab);
+                    listener.onTabClick(sDateDialog, tab);
                 sDateType = tab.getPosition();
                 if (sDateType == 0) {
                     sMCalendarView.toGregorianMode();
@@ -83,20 +94,23 @@ public class DialogManager {
             calendar = Calendar.getInstance();
             calendar.set(2000, 04, 20);//2000-05-20
         }
+        LogUtil.i("hate", "传入时间:" + calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH));
         sMCalendarView.init(calendar);
 
         if (isLruaCalendar) {
-            tabLayout.setVerticalScrollbarPosition(1);
-//            tabLayout.setScrollPosition(1, 1, true);
-            sMCalendarView.toLunarMode();
+            ThreadUtil.safeRunDelay(new Runnable() {
+                @Override
+                public void run() {
+                    sMCalendarView.toLunarMode();
+                }
+            }, 30);
         }
 
         contentView.findViewById(R.id.tv_dialog_select_date_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null)
-                    listener.onCancel(sMSlideUpDialog);
-//                slideUpDialog.dismiss();
+                    listener.onCancel(sDateDialog);
             }
         });
 
@@ -105,15 +119,14 @@ public class DialogManager {
             public void onClick(View view) {
                 Calendar calendar = sMCalendarView.getCalendarData().getCalendar();//返回的是ChineseCalendar对象
                 if (listener != null)
-                    listener.onDateFinish(sMSlideUpDialog, calendar, sDateType);
+                    listener.onDateFinish(sDateDialog, calendar, sDateType);
             }
         });
     }
 
 
     public static SlideUpDialog showSelectGenderDialog(Context context, final int position, final OnGenderSelectListener onGenderSelectListener) {
-        sGenderPosition = position;
-        sSlideUpDialog = new SlideUpDialog(context).bindView(R.layout.dialog_select_gender, new SlideUpDialog.BindViewListener() {
+        sGenderDialog = new SlideUpDialog(context).bindView(R.layout.dialog_select_gender, new SlideUpDialog.BindViewListener() {
             @Override
             public void onBind(View contentView) {
                 final CheckBox cbMale = (CheckBox) contentView.findViewById(R.id.cb_dialog_select_gender_male);
@@ -130,41 +143,59 @@ public class DialogManager {
                 maleRootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!cbMale.isChecked()) {
-                            cbMale.setChecked(true);
-                        }
+                        onGenderSelectListener.onGenderConfirm(sGenderDialog, 0);
+                        cbMale.setChecked(true);
                         cbFemale.setChecked(false);
-                        sGenderPosition = 0;
                     }
                 });
                 femaleRootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!cbFemale.isChecked()) {
-                            cbFemale.setChecked(true);
-                        }
+                        onGenderSelectListener.onGenderConfirm(sGenderDialog, 1);
+                        cbFemale.setChecked(true);
                         cbMale.setChecked(false);
-                        sGenderPosition = 1;
-                    }
-                });
-                //取消
-                contentView.findViewById(R.id.fl_dialog_select_gender_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onGenderSelectListener.onGenderCancel(sSlideUpDialog);
-                    }
-                });
-                //确定
-                contentView.findViewById(R.id.fl_dialog_select_gender_confirm).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (onGenderSelectListener != null)
-                            onGenderSelectListener.onGenderConfirm(sSlideUpDialog, sGenderPosition);
                     }
                 });
             }
         });
-        sSlideUpDialog.show();
-        return sSlideUpDialog;
+        sGenderDialog.show();
+        return sGenderDialog;
     }
+
+    public static SlideUpDialog showSelectPhoto(Context context, final OnPhotoDialogListener listener) {
+        sPhotoDialog = new SlideUpDialog(context);
+        sPhotoDialog.bindView(R.layout.dialog_select_photo, new SlideUpDialog.BindViewListener() {
+            @Override
+            public void onBind(View contentView) {
+                contentView.findViewById(R.id.photograph).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onTakePhoto(sPhotoDialog);
+                        }
+                    }
+                });
+                contentView.findViewById(R.id.from_pic_select).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onGalleryPhoto(sPhotoDialog);
+                        }
+                    }
+                });
+                contentView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (listener != null) {
+                            listener.onCancel(sPhotoDialog);
+                        }
+                    }
+                });
+            }
+        });
+        sPhotoDialog.show();
+        return sPhotoDialog;
+    }
+
+
 }

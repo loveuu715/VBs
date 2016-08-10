@@ -42,6 +42,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         public final static Property Month = new Property(17, int.class, "month", false, "MONTH");
         public final static Property Day = new Property(18, int.class, "day", false, "DAY");
         public final static Property BirthType = new Property(19, int.class, "birthType", false, "BIRTH_TYPE");
+        public final static Property LYear = new Property(20, int.class, "lYear", false, "L_YEAR");
+        public final static Property LMonth = new Property(21, int.class, "lMonth", false, "L_MONTH");
+        public final static Property LDay = new Property(22, int.class, "lDay", false, "L_DAY");
     };
 
 
@@ -76,7 +79,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
                 "\"YEAR\" INTEGER NOT NULL ," + // 16: year
                 "\"MONTH\" INTEGER NOT NULL ," + // 17: month
                 "\"DAY\" INTEGER NOT NULL ," + // 18: day
-                "\"BIRTH_TYPE\" INTEGER NOT NULL );"); // 19: birthType
+                "\"BIRTH_TYPE\" INTEGER NOT NULL ," + // 19: birthType
+                "\"L_YEAR\" INTEGER NOT NULL ," + // 20: lYear
+                "\"L_MONTH\" INTEGER NOT NULL ," + // 21: lMonth
+                "\"L_DAY\" INTEGER NOT NULL );"); // 22: lDay
     }
 
     /** Drops the underlying database table. */
@@ -136,6 +142,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         stmt.bindLong(18, entity.getMonth());
         stmt.bindLong(19, entity.getDay());
         stmt.bindLong(20, entity.getBirthType());
+        stmt.bindLong(21, entity.getLYear());
+        stmt.bindLong(22, entity.getLMonth());
+        stmt.bindLong(23, entity.getLDay());
     }
 
     @Override
@@ -189,6 +198,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         stmt.bindLong(18, entity.getMonth());
         stmt.bindLong(19, entity.getDay());
         stmt.bindLong(20, entity.getBirthType());
+        stmt.bindLong(21, entity.getLYear());
+        stmt.bindLong(22, entity.getLMonth());
+        stmt.bindLong(23, entity.getLDay());
     }
 
     @Override
@@ -218,7 +230,10 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
             cursor.getInt(offset + 16), // year
             cursor.getInt(offset + 17), // month
             cursor.getInt(offset + 18), // day
-            cursor.getInt(offset + 19) // birthType
+            cursor.getInt(offset + 19), // birthType
+            cursor.getInt(offset + 20), // lYear
+            cursor.getInt(offset + 21), // lMonth
+            cursor.getInt(offset + 22) // lDay
         );
         return entity;
     }
@@ -245,6 +260,9 @@ public class DBUserBeanDao extends AbstractDao<DBUserBean, Long> {
         entity.setMonth(cursor.getInt(offset + 17));
         entity.setDay(cursor.getInt(offset + 18));
         entity.setBirthType(cursor.getInt(offset + 19));
+        entity.setLYear(cursor.getInt(offset + 20));
+        entity.setLMonth(cursor.getInt(offset + 21));
+        entity.setLDay(cursor.getInt(offset + 22));
      }
     
     @Override

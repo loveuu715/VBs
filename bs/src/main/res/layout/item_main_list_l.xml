@@ -21,11 +21,12 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
             android:src="@mipmap/male"/>
+
         <RelativeLayout
-            android:layout_marginRight="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp">
 
             <vbs.vvi.com.bs.ui.CircleImageView
                 android:id="@+id/civ_mainList_avatar"
@@ -42,14 +43,15 @@
                 android:id="@+id/tv_mainList_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/civ_mainList_avatar"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:text="兮夜"
                 android:textSize="16sp"/>
         </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_mainlist_days"
             android:layout_width="wrap_content"
@@ -70,11 +72,11 @@
             />
 
         <TextView
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="3dp"
             android:id="@+id/tv_mainlist_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
             android:layout_marginLeft="15dp"
             android:drawableLeft="@mipmap/icon_default_birthday"
             android:gravity="center_vertical"
