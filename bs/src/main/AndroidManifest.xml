@@ -33,10 +33,15 @@
 
         <!--添加生日-->
         <activity
-            android:name=".model.adduser.AddUserActivity"/>
+            android:name=".model.addbirth.AddBirthActivity"/>
 
         <!--联系人列表-->
         <activity android:name=".model.contact.ContactListActivity"/>
+
+        <!--生日详情-->
+       <activity android:name=".model.birthdetail.BirthDetailActivity"
+                 android:theme="@style/MainTheme"
+           />
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ import vbs.vvi.com.bs.common.events.EventIds;
 import vbs.vvi.com.bs.common.events.EventObject;
 import vbs.vvi.com.bs.db.DBManager;
 import vbs.vvi.com.bs.db.DBUserBean;
-import vbs.vvi.com.bs.model.adduser.AddUserActivity;
+import vbs.vvi.com.bs.model.addbirth.AddBirthActivity;
 import vbs.vvi.com.bs.model.mainlist.MainListFragment;
 import vbs.vvi.com.bs.utils.ImageLoader;
 import vbs.vvi.com.bs.utils.SceneManager;
@@ -68,7 +68,7 @@ public class MainActivity extends BaseActivity {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SceneManager.toScene(mContext, AddUserActivity.class, null);
+                SceneManager.toScene(mContext, AddBirthActivity.class, null);
 //                SceneManager.toScene(mContext, ContactListActivity.class, null);
             }
         });

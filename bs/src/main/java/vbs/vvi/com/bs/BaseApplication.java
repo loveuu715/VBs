@@ -55,8 +55,7 @@ public class BaseApplication extends Application {
     }
 
     private void initGalleryFinalConfig() {
-        //ThemeConfig.CYAN
-        int color = Color.rgb(0x33, 0x99, 0xee);
+        int color = Color.parseColor("#E48B7B");
         ThemeConfig theme = new ThemeConfig.Builder()
                 .setTitleBarBgColor(color)
                 .setFabNornalColor(color)
@@ -71,7 +70,7 @@ public class BaseApplication extends Application {
                 .setEnableRotate(true)//是否可旋转
                 .setCropSquare(true)//是否正方形裁剪
                 .setEnablePreview(true)//是否显示预览
-                .setMutiSelectMaxSize(12)//最大选择数量
+                .setMutiSelectMaxSize(9)//最大选择数量
                 .build();
 
         //配置imageloader

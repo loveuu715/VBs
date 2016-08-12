@@ -45,16 +45,22 @@ public class MainAdapter extends SuperAdapter<DBUserBean> {
         ImageView ivGender = holder.getView(R.id.iv_main_list_gender);
         ImageLoader.display(mContext, ivGender, item.getGender() == 0 ? R.mipmap.male : R.mipmap.female);
         TextView tvBirth = holder.getView(R.id.tv_mainlist_birthday);
+        ImageView ivBirthType = holder.getView(R.id.iv_main_list_birthType);
         if (item.getBirthType() == 1) {//农历
-            tvBirth.setText(Math.abs(item.getLMonth()) + "月" + item.getLDay() + "日");
+            String tip = item.getLMonth() + "月" + item.getLDay() + "日";
+            if (item.getLMonth() < 0)
+                tip = "润" + Math.abs(item.getLMonth()) + "月" + item.getLDay() + "日";
+            tvBirth.setText(tip);
+            ivBirthType.setBackgroundResource(R.drawable.lunar_icon);
         } else {//公历
             tvBirth.setText(item.getMonth() + "月" + item.getDay() + "日");
+            ivBirthType.setBackgroundResource(R.drawable.solar_icon);
         }
         int[] yd = getDays(item);
         TextView tvDays = holder.getView(R.id.tv_mainlist_days);
         tvDays.setText(yd[1] + "天");
         TextView tvTip = holder.getView(R.id.tv_mainlist_birTip);
-        tvTip.setText("后过"+yd[0]+"岁生日");
+        tvTip.setText("后过" + yd[0] + "岁生日");
     }
 
     private void getCurrentDayDetails() {
@@ -79,31 +85,49 @@ public class MainAdapter extends SuperAdapter<DBUserBean> {
         Date from;
         Date to;
         int myDays = 0;
-        if (item.getBirthType() == 0) {//公历
-            birthY = currentYear - year;
-            if (month > currentMonth) {
+        birthY = currentYear - year;
+        if (month > currentMonth) {
+            from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
+            to = DateUtils.getDate(currentYear + "-" + month + "-" + day);
+            myDays = DateUtils.getGapCount(from, to);
+        } else if (month < currentMonth) {
+            from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
+            to = DateUtils.getDate((currentYear + 1) + "-" + month + "-" + day);
+            myDays = DateUtils.getGapCount(from, to);
+            birthY++;
+        } else {
+            if (day > currentDay) {
                 from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
                 to = DateUtils.getDate(currentYear + "-" + month + "-" + day);
                 myDays = DateUtils.getGapCount(from, to);
-            } else if (month < currentMonth) {
+            } else if (day < currentDay) {
                 from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
                 to = DateUtils.getDate((currentYear + 1) + "-" + month + "-" + day);
                 myDays = DateUtils.getGapCount(from, to);
                 birthY++;
-            } else {
-                if (day > currentDay) {
-                    from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
-                    to = DateUtils.getDate(currentYear + "-" + month + "-" + day);
-                    myDays = DateUtils.getGapCount(from, to);
-                } else if (day < currentDay) {
-                    from = DateUtils.getDate(currentYear + "-" + currentMonth + "-" + currentDay);
-                    to = DateUtils.getDate((currentYear + 1) + "-" + month + "-" + day);
-                    myDays = DateUtils.getGapCount(from, to);
-                    birthY++;
-                }
             }
-        } else {//农历
         }
         return new int[]{birthY, myDays};
+    }
+
+    /**
+     * 计算农历天数
+     *
+     * @return
+     */
+    private int[] getLDays(DBUserBean item) {
+        int year = item.getLYear();
+        int month = item.getLMonth();
+        int day = item.getLDay();
+        getCurrentLDate(year, month, day);
+        return new int[]{};
+    }
+
+    private void getCurrentLDate(int year, int month, int day) {
+
+    }
+
+    public DBUserBean getBean(int position) {
+        return mList.get(position - 1);
     }
 }

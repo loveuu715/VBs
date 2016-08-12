@@ -71,17 +71,34 @@
             android:text="后过25岁生日"
             />
 
-        <TextView
-            android:id="@+id/tv_mainlist_birthday"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="3dp"
             android:layout_marginLeft="15dp"
-            android:drawableLeft="@mipmap/icon_default_birthday"
-            android:gravity="center_vertical"
-            android:text="08月24日"
-            />
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_main_list_birthType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/tv_mainlist_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/iv_main_list_birthType"
+                android:text="08月24日"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

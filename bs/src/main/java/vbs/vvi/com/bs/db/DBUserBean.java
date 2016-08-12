@@ -4,11 +4,13 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 /**
  * Created by Wayne on 2016/7/21.
  */
 @Entity
-public class DBUserBean {
+public class DBUserBean implements Serializable{
     @Id(autoincrement = true)
     private long userId;//用户id
     private String userKey;//用户唯一key

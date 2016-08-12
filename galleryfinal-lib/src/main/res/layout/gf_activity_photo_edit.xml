@@ -16,11 +16,13 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/white"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
     >
 
     <LinearLayout
@@ -84,11 +86,11 @@
             android:id="@+id/iv_take_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="9dp"
             android:padding="6dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_gf_camera"
             android:visibility="gone"
-            android:layout_marginRight="9dp"
             />
     </LinearLayout>
 
@@ -144,6 +146,7 @@
             android:layout_height="1dp"
             android:background="#d2d2d7"
             />
+
         <cn.finalteam.galleryfinal.widget.HorizontalListView
             android:id="@+id/lv_gallery"
             android:layout_width="match_parent"

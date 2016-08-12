@@ -61,7 +61,7 @@ public abstract class BaseRefreshFragment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycleView.addItemDecoration(itemDecoration);
         recycleView.setLayoutManager(layoutManager);
-        recycleView.setLoadingMoreProgressStyle(ProgressStyle.SysProgress);
+        recycleView.setLoadingMoreProgressStyle(ProgressStyle.LineScalePulseOutRapid);
         recycleView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {

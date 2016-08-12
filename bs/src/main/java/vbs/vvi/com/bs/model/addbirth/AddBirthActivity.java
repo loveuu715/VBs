@@ -1,4 +1,4 @@
-package vbs.vvi.com.bs.model.adduser;
+package vbs.vvi.com.bs.model.addbirth;
 
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -14,13 +14,11 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 import vbs.vvi.com.bs.R;
@@ -45,7 +43,7 @@ import vbs.vvi.com.bs.utils.UUIDGenerator;
  * Created by Wayne on 2016/8/3.
  * Email: loveuu715@163.com
  */
-public class AddUserActivity extends BaseActivity implements GalleryFinal.OnHanlderResultCallback {
+public class AddBirthActivity extends BaseActivity implements GalleryFinal.OnHanlderResultCallback {
 
     private static final int REQUEST_SELECT_PICTURE = 0x02;//选择相册图片
     private static final int REQUEST_SELECT_CAMERA = 0x4;//选择拍照
@@ -83,7 +81,7 @@ public class AddUserActivity extends BaseActivity implements GalleryFinal.OnHanl
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_add_user;
+        return R.layout.activity_add_birth;
     }
 
     @Override
@@ -199,9 +197,9 @@ public class AddUserActivity extends BaseActivity implements GalleryFinal.OnHanl
                 }
                 Drawable drawable;
                 if (mBirthType == 0)
-                    drawable = getResources().getDrawable(R.mipmap.calendar_gong);
+                    drawable = getResources().getDrawable(R.drawable.solar_icon);
                 else
-                    drawable = getResources().getDrawable(R.mipmap.calendar_nong);
+                    drawable = getResources().getDrawable(R.drawable.lunar_icon);
 
                 // 这一步必须要做,否则不会显示.
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());

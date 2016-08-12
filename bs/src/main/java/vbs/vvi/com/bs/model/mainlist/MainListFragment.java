@@ -2,6 +2,7 @@ package vbs.vvi.com.bs.model.mainlist;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -19,6 +20,8 @@ import vbs.vvi.com.bs.R;
 import vbs.vvi.com.bs.base.BaseRefreshFragment;
 import vbs.vvi.com.bs.db.DBManager;
 import vbs.vvi.com.bs.db.DBUserBean;
+import vbs.vvi.com.bs.model.birthdetail.BirthDetailActivity;
+import vbs.vvi.com.bs.utils.SceneManager;
 
 /**
  * Created by Wayne on 2016/8/4.
@@ -69,7 +72,9 @@ public class MainListFragment extends BaseRefreshFragment {
         mMainAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
-                //TODO 生日详情
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("birthBean", mMainAdapter.getBean(position));
+                SceneManager.toScene(mContext, BirthDetailActivity.class, bundle);
             }
         });
         return mMainAdapter;

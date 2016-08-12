@@ -16,9 +16,11 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:clipToPadding="true"
+                android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:id="@+id/titlebar"
@@ -46,6 +48,7 @@
             android:layout_toRightOf="@id/iv_back"
             android:orientation="vertical"
             >
+
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
@@ -71,28 +74,29 @@
             android:id="@+id/iv_folder_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_gf_triangle_arrow"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="-2.5dp"
             android:layout_marginLeft="8dp"
             android:layout_toRightOf="@id/ll_title"
-            android:layout_marginBottom="-2.5dp"
-            android:layout_centerVertical="true"
+            android:src="@drawable/ic_gf_triangle_arrow"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             >
+
             <ImageView
                 android:id="@+id/iv_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="6dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_gf_clear"
-                android:padding="6dp"
                 android:visibility="gone"
                 />
 
@@ -100,9 +104,9 @@
                 android:id="@+id/iv_preview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="6dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_gf_preview"
-                android:padding="6dp"
                 android:visibility="gone"
                 />
 
@@ -110,9 +114,9 @@
                 android:id="@+id/iv_take_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="6dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_gf_camera"
-                android:padding="6dp"
                 android:visibility="gone"
                 />
 
@@ -120,12 +124,12 @@
                 android:id="@+id/tv_choose_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="6dp"
                 android:layout_marginRight="9dp"
+                android:padding="6dp"
+                android:text="@string/gf_finish"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:visibility="visible"
-                android:text="@string/gf_finish"
                 />
         </LinearLayout>
 
@@ -136,6 +140,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/titlebar"
         >
+
         <GridView
             android:id="@+id/gv_photo_list"
             android:layout_width="match_parent"
@@ -147,6 +152,7 @@
             android:numColumns="3"
             android:verticalSpacing="2dp"
             />
+
         <TextView
             android:id="@+id/tv_empty_view"
             android:layout_width="wrap_content"
@@ -159,16 +165,16 @@
     </FrameLayout>
 
     <!--<cn.finalteam.galleryfinal.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab_ok"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:visibility="gone"-->
-        <!--fab:fabIcon="@drawable/ic_gf_done"-->
-        <!--/>-->
+    <!--android:id="@+id/fab_ok"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_marginBottom="16dp"-->
+    <!--android:layout_marginRight="16dp"-->
+    <!--android:visibility="gone"-->
+    <!--fab:fabIcon="@drawable/ic_gf_done"-->
+    <!--/>-->
 
     <LinearLayout
         android:id="@+id/ll_folder_panel"
@@ -178,6 +184,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         >
+
         <ListView
             android:id="@+id/lv_folder_list"
             android:layout_width="match_parent"
